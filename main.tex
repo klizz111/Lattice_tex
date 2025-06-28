@@ -1,0 +1,134 @@
+\documentclass[12pt,a4paper]{article}
+
+% 中文支持
+\usepackage[UTF8]{ctex}
+
+% 页面设置
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+
+% 数学公式
+\usepackage{amsmath,amssymb,amsthm}
+
+% 图表支持
+\usepackage{graphicx}
+\usepackage{float}
+
+% 其他必要包
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% 字体设置 - 使用ctex的字体命令
+\setCJKfamilyfont{fs}{FangSong}  % 仿宋
+\newcommand{\fs}{\CJKfamily{fs}}
+
+% 1.5倍行距
+\onehalfspacing
+
+% 标题格式设置
+% 一级标题：三号黑体，顶格
+\titleformat{\section}
+{\heiti\fontsize{16pt}{24pt}\selectfont}
+{\chinese{section}、}
+{0em}
+{}
+
+% 二级标题：小三黑体，缩进2格
+\titleformat{\subsection}
+{\heiti\fontsize{15pt}{22.5pt}\selectfont}
+{\hspace{2em}\arabic{subsection}.}
+{0em}
+{}
+
+% 三级标题：小三黑体，缩进2格
+\titleformat{\subsubsection}
+{\heiti\fontsize{15pt}{22.5pt}\selectfont}
+{\hspace{2em}\arabic{section}.\arabic{subsection}}
+{0em}
+{}
+
+% 公式编号格式 (x.y)
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{(\arabic{section}.\arabic{equation})}
+
+% 正文字体：四号宋体
+\renewcommand{\normalsize}{\fontsize{12pt}{18pt}\selectfont}
+
+\begin{document}
+
+% 标题部分
+\begin{center}
+{\heiti\fontsize{16pt}{24pt}\selectfont 赛题二}
+\end{center}
+
+% 作者信息（四号仿宋）
+\begin{center}
+{\fs\fontsize{12pt}{18pt}\selectfont 作者1 作者2 作者3 … 老师1（指导老师）}
+\end{center}
+
+% 学校和邮箱（小四宋体）
+\begin{center}
+{\songti\fontsize{10.5pt}{15.75pt}\selectfont 暨南大学 \; 邮箱}
+\end{center}
+
+\vspace{1em}
+
+% 摘要部分
+\noindent{\heiti\fontsize{12pt}{18pt}\selectfont 摘要：}{\songti\fontsize{12pt}{18pt}\selectfont 在此处输入摘要内容，约300~500字。应说明工作的目的、研究方法、结果和最终结论。要突出本论文的创造性成果或新的见解，语言力求精炼。为便于文献检索，应在本页下方另起一行注明本文的关键词（3~5个）。}
+
+\vspace{1em}
+
+\noindent{\heiti\fontsize{12pt}{18pt}\selectfont 关键词：}{\songti\fontsize{12pt}{18pt}\selectfont 关键词1；关键词2；关键词3；关键词4；关键词5}
+
+\vspace{2em}
+
+% 引言
+{\centering\heiti\fontsize{16pt}{24pt}\selectfont 引言\par}
+\vspace{1em}
+在论文正文前，应简要阐述对赛题的分析、解题使用的主要方法和解题结果等内容。解题思路为将通过构造格将RLWE转化为CVP问题，再通过Kannan embedding将问题转化为SVP问题后使用Seiving求解。
+
+% 正文开始
+\section{求解环R中主理想$a(x)=R_q$的概率}
+
+\subsection{概率计算方法}
+
+这里是二级标题下的正文内容。所有正文使用四号宋体。
+
+\subsubsection{具体实现步骤}
+
+
+
+\subsection{结果}
+
+\begin{equation}
+p = \left(1 - \frac{1}{q^2}\right)^{128} \tag{1.1}
+\end{equation}。
+
+
+\section{题目二}
+
+\subsection{题目2}
+
+\subsection{算法优化}
+
+\begin{equation}
+\nabla f(x) = 2ax + b
+\end{equation}
+
+这个公式的编号为(2.2)。
+
+\section{实验结果与分析}
+
+\subsection{实验设置}
+
+在这里描述实验的具体设置。
+
+\subsection{结果分析}
+
+在这里分析实验结果。
+
+\section{结论}
+
+总结论文的主要贡献和结论。
+
+\end{document}
