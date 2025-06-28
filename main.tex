@@ -37,19 +37,23 @@
 \titleformat{\subsection}
 {\heiti\fontsize{15pt}{22.5pt}\selectfont}
 {\hspace{2em}\arabic{subsection}.}
-{0em}
+{0.5em}
 {}
 
 % 三级标题：小三黑体，缩进2格
 \titleformat{\subsubsection}
 {\heiti\fontsize{15pt}{22.5pt}\selectfont}
-{\hspace{2em}\arabic{section}.\arabic{subsection}}
-{0em}
+{\hspace{2em}\arabic{subsection}.\arabic{subsubsection}}
+{0.5em}
 {}
+
+% 设置标题与正文之间的间距
+% \titlespacing*{\subsection}{0pt}{12pt}{6pt}
+% \titlespacing*{\subsubsection}{0pt}{12pt}{6pt}
 
 % 公式编号格式 (x.y)
 \numberwithin{equation}{section}
-\renewcommand{\theequation}{(\arabic{section}.\arabic{equation})}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
 
 % 正文字体：四号宋体
 \renewcommand{\normalsize}{\fontsize{12pt}{18pt}\selectfont}
@@ -58,17 +62,17 @@
 
 % 标题部分
 \begin{center}
-{\heiti\fontsize{16pt}{24pt}\selectfont 赛题二}
+	{\heiti\fontsize{16pt}{24pt}\selectfont 赛题二}
 \end{center}
 
 % 作者信息（四号仿宋）
 \begin{center}
-{\fs\fontsize{12pt}{18pt}\selectfont 作者1 作者2 作者3 … 老师1（指导老师）}
+	{\fs\fontsize{12pt}{18pt}\selectfont 作者1 作者2 作者3 … 老师1（指导老师）}
 \end{center}
 
 % 学校和邮箱（小四宋体）
 \begin{center}
-{\songti\fontsize{10.5pt}{15.75pt}\selectfont 暨南大学 \; 邮箱}
+	{\songti\fontsize{10.5pt}{15.75pt}\selectfont 暨南大学 \; 邮箱}
 \end{center}
 
 \vspace{1em}
@@ -94,38 +98,142 @@
 
 这里是二级标题下的正文内容。所有正文使用四号宋体。
 
-\subsubsection{具体实现步骤}
-
-
+% \subsubsection{具体实现步骤}
 
 \subsection{结果}
 
 \begin{equation}
-p = \left(1 - \frac{1}{q^2}\right)^{128} \tag{1.1}
+	p = \left(1 - \frac{1}{q^2}\right)^{128}
 \end{equation}。
 
 
 \section{题目二}
 
-\subsection{题目2}
+\subsection{题目(1)}
 
-\subsection{算法优化}
+\subsubsection{解题思路}
+
+已知$b(x)=a(x)s(x)+e(x)$，则多项式$t(x)=s_0+s_1 \cdot x + s_2 \cdot x + \ldots + s_63 \cdot x^{63}$可以表示为向量:
+
+\begin{align}
+	(s_0,s_1,s_2,...s_{63})
+\end{align}
+
+同理，$b(x)$和$e(x)$也可以表示为:
+
+\begin{align}
+	 & (b_0,b_1,b_2,...b_{63}) \\
+	 & (e_0,e_1,e_2,...e_{63})
+\end{align}
+
+将$b(x)=a(x)s(x)+e(x)$转化为矩阵乘法形式:
 
 \begin{equation}
-\nabla f(x) = 2ax + b
+	(a_0,a_1,a_2,...a_{n-1})
+	\left(
+	\begin{smallmatrix}
+			b_0      & b_1      & b_2    & \cdots & b_{n-1} \\
+			-b_{n-1} & b_0      & b_1    & \cdots & b_{n-2} \\
+			-b_{n-2} & -b_{n-1} & b_0    & \cdots & b_{n-3} \\
+			\vdots   & \vdots   & \vdots & \ddots & \vdots  \\
+			-b_1     & -b_2     & -b_3   & \cdots & b_0     \\
+		\end{smallmatrix}
+	\right)
+	=
+	(c_0,c_1,c_2,...c_{n-1})
 \end{equation}
 
-这个公式的编号为(2.2)。
+再把多项式乘法改为$E=AS-B$形式
+将(2.4)中的矩阵构造格:
 
-\section{实验结果与分析}
+\begin{align}
+	\lambda=
+	\left(
+	\begin{smallmatrix}
+		p        &          &        &        &         &   &   \\
+		         & p        &        &        &         &   &   \\
+		         &          & p      &        &         &   &   \\
+		         &          &        & \ddots &         &   &   \\
+		         &          &        &        & p       &   &   \\
+		a_0      & a_1      & a_2    & \cdots & a_{n-1} & 1 &   \\
+		-a_{n-1} & a_0      & a_1    & \cdots & a_{n-2} &   & 1 \\
+		-a_{n-2} & -a_{n-1} & a_0    & \cdots & a_{n-3} &   &   \\
+		\vdots   & \vdots   & \vdots & \ddots & \vdots  &   &   \\
+		-a_1     & -a_2     & -a_3   & \cdots & a_0     &   &   \\
+		b_0      & b_1      & b_2    & \cdots & b_{n-1} &   & 1
+	\end{smallmatrix}
+	\right)
+\end{align}
 
-\subsection{实验设置}
+格$\lambda$具有线性关系:
 
-在这里描述实验的具体设置。
+\begin{align}
+	(k_0,k_1,...k_{63},s_0,s_1,...s_{63})
+	\left(
+	\begin{smallmatrix}
+			p\\
+			&p\\
+			&&p\\
+			&&&\cdots\\
+			&&&&p\\
+			a_0    &a_1    &a_2   &\cdots &a_{n-1}            &1\\
+			-a_{n-1}&a_0    &a_1   &\cdots &a_{n-2}       &&1\\
+			-a_{n-2}&-a_{n-1}&a_0   &\cdots &a_{n-3}  &&&1\\
+			\vdots &\vdots &\vdots&\ddots &\vdots             &&&&\cdots\\
+			-a_1    &-a_2    &-a_3   &\cdots &a_0 &&&&&1\\
+		\end{smallmatrix}
+	\right)
+	=
+	(e_0,e_1,...e_{63},s_0,s_1,...s_{63})
+\end{align}
 
-\subsection{结果分析}
+这样问题就转换为格$\lambda$中的CVP问题.
+再通过Kannan 's embedding，将问题转化为SVP:
 
-在这里分析实验结果。
+\begin{align}
+	(k_0,k_1,...k_{63},s_0,s_1,...s_{63},1)
+	\left(
+	\begin{smallmatrix}
+			p\\
+			&p\\
+			&&\\
+			&&&\cdots\\
+			&&&&p\\
+			a_0    &a_1    &   &\cdots &a_{n-1}            &1\\
+			-a_{n-1}&a_0    &   &\cdots &a_{n-2}       &&\\
+			-a_{n-2}&-a_{n-1}&   &\cdots &a_{n-3}  &&\\
+			\vdots &\vdots &&\ddots &\vdots             &&\cdots\\
+			-a_1    &-a_2    &   &\cdots &a_0 &&&1\\
+			b_0    &b_1    &   &\cdots &b_{n-1}&&&&1\\
+		\end{smallmatrix}
+	\right)
+	=
+	(e_0,e_1,...e_{63},s_0,s_1,...s_{63},1)
+\end{align}
+
+对格进行格基约化，则约化后的第一行的[n,2n]项即为私密多项式，时间复杂度为----
+
+又或者使用Sieving求解SVP问题，在使用\textit{3-sieve (triple\_sieve)}时，时间复杂度为$2^{0.396n+o(n)}$，其中$n=2N+1$，$N$为RLWE问题的维度，对于$n=129$的问题，\textit{total CPU time}约为\textit{33.2h}。
+
+\section{解题结果}
+
+\subsection{题目(1)}
+
+
+    s = (1, -2, 0, 0, 1, 0, -1, 1, 1, -1, 1, 2, 1, 1, 
+        -1, -1, 0, 1, 0, -1, -1, 0, 0, 2, 1, -1, 0, -1, 0, 2, 0, 1, 
+        1, -1, 0, 0, -1, 2, -1, -1, 0, -1, -1, 2, 1, -1, 1, -1, 2, 1, 1, 0, 
+        -1, 1, -1, 0, -2, 1, 0, 1, -2, 0, 0, 1) 
+        
+    s.norm=8.54400374531753
+
+    \hspace*{\fill}
+
+    e = (-1, 1, 0, -1, 1, 0, -1, 0, -1, -1, 0, 1, -1, -1, -2, -2, -1, -1, 0, 0, -1, 1, 2, 2, -1, 
+        -1, 0, 0, -1, -1, 0, 1, -1, -1, -2, -1, 1, 0, -1, 0, 0, -1, 1, 0, 1, -2, 0, 1, 0, -1, -1,
+        -1, 1, 1, -1, -1, 1, 1, 0, 1, 0, -1, 0, -1) 
+    
+        e.norm=7.999999999999999
 
 \section{结论}
 
