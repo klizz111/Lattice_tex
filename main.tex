@@ -24,6 +24,26 @@
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \newcommand{\supercite}[2][]{\textsuperscript{\citep[#1]{#2}}}
 
+% 页眉页脚设置
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% 设置页眉页脚样式
+\pagestyle{fancy}
+\fancyhf{} % 清空所有页眉页脚
+
+% 定义页眉页脚文字格式：小五号字体(9pt)，浅灰色，带下划线
+\newcommand{\headerfootertext}{\fontsize{9pt}{13.5pt}\selectfont\color{gray}\underline{第十届（2025年）全国高校密码数学挑战赛参赛论文}}
+
+% 设置页眉
+\fancyhead[C]{\headerfootertext}
+
+% 设置页脚
+\fancyfoot[C]{\headerfootertext}
+
+% 去掉页脚下方的横线
+\renewcommand{\footrulewidth}{0pt}
+
 % 设置参考文献样式
 \bibliographystyle{ieeetr}
 
